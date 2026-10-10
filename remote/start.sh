@@ -4,7 +4,7 @@ umask 077
 
 # Runs only inside the temporary Colab VM.
 STRATA_REF='v0.1.41'
-PORT=8080
+PORT=18080
 
 cd /content
 if [[ ! -d /content/strata/.git ]]; then

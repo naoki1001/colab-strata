@@ -40,7 +40,7 @@ ssh_colab root@colab-strata \
 mkdir -p "$STATE_DIR"
 ssh_colab -f -N -M -S "$SOCKET_PATH" \
   -o ExitOnForwardFailure=yes \
-  -L "127.0.0.1:${COLAB_LOCAL_PORT}:127.0.0.1:8080" \
+  -L "127.0.0.1:${COLAB_LOCAL_PORT}:127.0.0.1:18080" \
   root@colab-strata
 
 created=0
