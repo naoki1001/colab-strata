@@ -3,17 +3,24 @@ set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
 colab status -s "$COLAB_SESSION"
-if [[ -S "$SOCKET_PATH" ]]; then
-  echo 'SSH tunnel: socket exists (may still be stale)'
+
+if [[ -S "$SOCKET_PATH" ]] && \
+  ssh -S "$SOCKET_PATH" -O check root@colab-strata >/dev/null 2>&1; then
+  echo 'SSH tunnel: connected'
+  echo '--- Colab setup logs (last 20 lines) ---'
+  # Reuse the existing master connection. Never open a second Colab SSH
+  # connection: the backend rejects simultaneous connections with HTTP 429.
+  ssh -S "$SOCKET_PATH" \
+    -o ControlMaster=no \
+    -o ProxyCommand=false \
+    -o BatchMode=yes \
+    root@colab-strata \
+    'if [ -f /content/colab-strata.log ]; then tail -n 20 /content/colab-strata.log; else echo "setup log not created yet"; fi' \
+    || echo 'Could not read remote logs over the existing SSH tunnel.' >&2
+elif [[ -S "$SOCKET_PATH" ]]; then
+  echo 'SSH tunnel: stale control socket (not connected)'
 else
   echo 'SSH tunnel: not running'
-fi
-
-if [[ -f "$KEY_PATH" ]]; then
-  echo '--- Colab setup logs (last 20 lines) ---'
-  ssh_colab root@colab-strata \
-    'if [ -f /content/colab-strata.log ]; then tail -n 20 /content/colab-strata.log; else echo "setup log not created yet"; fi' \
-    || echo 'Could not read remote logs; SSH may be unavailable.' >&2
 fi
 
 if command -v curl >/dev/null && \
