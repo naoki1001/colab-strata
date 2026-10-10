@@ -1,4 +1,5 @@
 # colab-strata
+[English](README.md) | [日本語](README.ja.md)
 
 Run [Strata](https://github.com/Niko1221/Strata) with **Qwen3.8-Flash-Next** on a Google Colab GPU from the command line. The [official Colab CLI](https://github.com/googlecolab/google-colab-cli) connects Strata's Web UI and OpenAI-compatible API to localhost over SSH, without creating a notebook.
 
@@ -23,13 +24,13 @@ Follow the Google sign-in prompt on first use. `up` allocates a Colab runtime, l
 
 Once ready:
 
-- **Web UI (Chat / Monitor / About):** http://127.0.0.1:8080/
-- **OpenAI-compatible API:** http://127.0.0.1:8080/v1
+- **Web UI (Chat / Monitor / About):** http://localhost:8080/
+- **OpenAI-compatible API:** http://localhost:8080/v1
 
 For example, send a chat request:
 
 ```bash
-curl -fsS http://127.0.0.1:8080/v1/chat/completions \
+curl -fsS http://localhost:8080/v1/chat/completions \
   -H 'Content-Type: application/json' \
   -d '{"model":"qwen","messages":[{"role":"user","content":"Say hello in Japanese."}],"max_tokens":64}'
 ```
