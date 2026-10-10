@@ -1,0 +1,18 @@
+[tools]
+uv = "latest"
+
+[tasks.up]
+description = "Allocate Colab A100, start Strata, and open a local SSH tunnel"
+run = "bash scripts/up.sh"
+
+[tasks.status]
+description = "Show Colab status, remote logs, and API readiness"
+run = "bash scripts/status.sh"
+
+[tasks.down]
+description = "Close the SSH tunnel and release Colab resources"
+run = "bash scripts/down.sh"
+
+[tasks.usage]
+description = "Show remaining Colab compute units"
+run = "uvx --python 3.12 --from google-colab-cli==0.7.4 colab --auth oauth2 usage"
