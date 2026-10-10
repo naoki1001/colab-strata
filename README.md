@@ -58,6 +58,7 @@ Strata chooses quantization and context length based on the allocated hardware. 
 
 ## Verified setup
 
+Tested on Windows with WSL2.
 This PoC has been tested end-to-end on **Colab A100-SXM4-80GB** with Strata `v0.1.41` and Qwen3.8-Flash-Next (`IQ3_XXS`, 131,072-token context, vision enabled), including CLI provisioning, local API inference, Web UI image understanding, and runtime shutdown. A fresh session was also provisioned successfully without manual changes to the remote VM.
 
 ## Limitations
