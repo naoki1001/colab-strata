@@ -15,4 +15,4 @@ run = "bash scripts/down.sh"
 
 [tasks.usage]
 description = "Show remaining Colab compute units"
-run = "uvx --python 3.12 --from google-colab-cli==0.7.4 colab --auth oauth2 usage"
+run = "bash scripts/usage.sh"

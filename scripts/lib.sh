@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
+umask 077
+
+# Protect credentials and session state written by Colab CLI.
+COLAB_CLI_DIR="$HOME/.config/colab-cli"
+mkdir -p "$COLAB_CLI_DIR"
+chmod 700 "$COLAB_CLI_DIR"
+find "$COLAB_CLI_DIR" -maxdepth 1 -type f -exec chmod 600 {} +
 
 COLAB_SESSION="${COLAB_SESSION:-colab-strata}"
 COLAB_GPU="${COLAB_GPU:-A100}"
