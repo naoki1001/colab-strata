@@ -14,15 +14,14 @@ if [[ -S "$SOCKET_PATH" ]]; then
   exit 1
 fi
 
-if ! session_status="$(colab status -s "$COLAB_SESSION")"; then
+if ! session_status="$(colab status -s "$COLAB_SESSION" | tee /dev/stderr)"; then
   echo 'Failed to check Colab session status.' >&2
   exit 1
 fi
 
 expected="[colab] Session '$COLAB_SESSION' not found."
 
-if [[ "$session_status" != "$expected" ]]; then
-  printf '%s\n' "$session_status" >&2
+if [[ "$session_status" != *"$expected" ]]; then
   echo 'Cannot confirm that the session is absent. Run mise run status or down.' >&2
   exit 1
 fi
